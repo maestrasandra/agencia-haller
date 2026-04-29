@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haller Chamorro — Desarrollo Web para Pequeñas Empresas</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a24;
+    --accent: #c8f545;
+    --accent2: #7cffd4;
+    --text: #f0ede8;
+    --muted: #8a8896;
+    --border: rgba(255,255,255,0.08);
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.2rem 5%;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .logo span { color: var(--accent); }
+
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+  nav ul a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #0a0a0f !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 100px;
+    font-weight: 500 !important;
+    font-size: 0.875rem !important;
+    text-decoration: none;
+    transition: opacity 0.2s !important;
+  }
+  .nav-cta:hover { opacity: 0.85; color: #0a0a0f !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: 7rem 5% 5rem;
+    display: flex; align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: 
+      linear-gradient(rgba(200,245,69,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,245,69,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 100%);
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 10%; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(200,245,69,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 1100px; margin: 0 auto;
+    position: relative; z-index: 1;
+    width: 100%;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1px solid rgba(200,245,69,0.3);
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: var(--font-head);
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 540px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--accent);
+    color: #0a0a0f;
+    padding: 0.9rem 2rem;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    font-family: var(--font-head);
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); opacity: 0.9; }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.9rem 2rem;
+    border-radius: 100px;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+
+  .hero-stats {
+    display: flex; gap: 3rem; flex-wrap: wrap;
+    margin-top: 5rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .stat-num {
+    font-family: var(--font-head);
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.03em;
+  }
+
+  .stat-num span { color: var(--accent); }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.2rem;
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem 5%; }
+
+  .section-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 520px;
+    font-weight: 300;
+  }
+
+  .max-w { max-width: 1100px; margin: 0 auto; }
+
+  /* SERVICES */
+  .services { background: var(--surface); }
+
+  .services-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    flex-wrap: wrap; gap: 2rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .service-card {
+    background: var(--surface);
+    padding: 2.5rem;
+    transition: background 0.3s;
+    cursor: default;
+  }
+  .service-card:hover { background: var(--surface2); }
+
+  .service-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: rgba(200,245,69,0.1);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+  }
+
+  .service-card h3 {
+    font-family: var(--font-head);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .service-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; font-weight: 300; }
+
+  .service-tag {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-size: 0.75rem;
+    color: var(--accent);
+    border: 1px solid rgba(200,245,69,0.25);
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    font-weight: 500;
+  }
+
+  /* WHY ME */
+  .why { background: var(--bg); }
+
+  .why-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .why-list { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .why-item {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .why-item:hover { border-color: rgba(200,245,69,0.2); background: rgba(200,245,69,0.03); }
+
+  .why-num {
+    font-family: var(--font-head);
+    font-size: 2rem;
+    font-weight: 800;
+    color: rgba(200,245,69,0.25);
+    line-height: 1;
+    min-width: 2rem;
+    letter-spacing: -0.03em;
+  }
+
+  .why-text h4 {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+  }
+  .why-text p { font-size: 0.875rem; color: var(--muted); font-weight: 300; }
+
+  .why-visual {
+    position: relative;
+    height: 460px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .world-map {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .globe-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(200,245,69,0.12);
+  }
+
+  .geo-dots {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .city-dot {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px rgba(200,245,69,0.6);
+    animation: blink 3s ease infinite;
+  }
+
+  .city-dot::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,245,69,0.3);
+    animation: expand 3s ease infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  @keyframes expand {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(2.5); opacity: 0; }
+  }
+
+  .city-label {
+    position: absolute;
+    font-size: 0.65rem;
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    top: -18px;
+    left: 50%; transform: translateX(-50%);
+    text-transform: uppercase;
+  }
+
+  .visual-title {
+    position: absolute;
+    bottom: 2rem; left: 50%; transform: translateX(-50%);
+    font-family: var(--font-head);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* PRICING */
+  .pricing { background: var(--surface); }
+
+  .pricing-header { text-align: center; margin-bottom: 3.5rem; }
+  .pricing-header .section-sub { margin: 0 auto; }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px; margin: 0 auto;
+  }
+
+  .plan {
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    background: var(--bg);
+    transition: transform 0.2s;
+    position: relative;
+  }
+  .plan:hover { transform: translateY(-4px); }
+
+  .plan.featured {
+    border-color: rgba(200,245,69,0.3);
+    background: linear-gradient(135deg, rgba(200,245,69,0.05) 0%, transparent 60%);
+  }
+
+  .plan-badge {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--accent);
+    color: #0a0a0f;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.3rem 1rem;
+    border-radius: 100px;
+    font-family: var(--font-head);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .plan-name {
+    font-family: var(--font-head);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .plan-price {
+    font-family: var(--font-head);
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .plan-price sup { font-size: 1.2rem; font-weight: 600; vertical-align: super; }
+  .plan-price .period { font-size: 1rem; font-weight: 400; color: var(--muted); letter-spacing: 0; }
+
+  .plan-desc { font-size: 0.875rem; color: var(--muted); margin-bottom: 2rem; font-weight: 300; }
+
+  .plan-features { list-style: none; margin-bottom: 2.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .plan-features li {
+    font-size: 0.875rem;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+
+  .plan-features li::before {
+    content: '';
+    width: 16px; height: 16px; min-width: 16px;
+    border-radius: 50%;
+    background: rgba(200,245,69,0.15);
+    border: 1px solid rgba(200,245,69,0.3);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2 5l2.5 2.5L8 3' stroke='%23c8f545' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-size: 10px; background-repeat: no-repeat; background-position: center;
+  }
+
+  .plan-cta {
+    display: block; text-align: center;
+    padding: 0.85rem;
+    border-radius: 100px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    font-family: var(--font-head);
+    transition: all 0.2s;
+  }
+
+  .plan.featured .plan-cta {
+    background: var(--accent);
+    color: #0a0a0f;
+  }
+  .plan.featured .plan-cta:hover { opacity: 0.88; }
+
+  .plan:not(.featured) .plan-cta {
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .plan:not(.featured) .plan-cta:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+
+  /* PROCESS */
+  .process { background: var(--bg); }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0;
+    margin-top: 3.5rem;
+    position: relative;
+  }
+
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 2rem; left: 2rem; right: 2rem; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), var(--border), transparent);
+    display: none;
+  }
+
+  .step {
+    padding: 2rem;
+    border-left: 1px solid var(--border);
+    position: relative;
+  }
+  .step:first-child { border-left: none; }
+
+  .step-num {
+    font-family: var(--font-head);
+    font-size: 4rem;
+    font-weight: 800;
+    color: rgba(200,245,69,0.08);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.5rem;
+  }
+
+  .step h3 {
+    font-family: var(--font-head);
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.02em;
+  }
+
+  .step p { font-size: 0.875rem; color: var(--muted); font-weight: 300; line-height: 1.7; }
+
+  /* ABOUT */
+  .about { background: var(--surface); }
+
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .about-avatar {
+    aspect-ratio: 4/5;
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+
+  .avatar-placeholder {
+    font-family: var(--font-head);
+    font-size: 5rem;
+    font-weight: 800;
+    color: rgba(200,245,69,0.2);
+    letter-spacing: -0.05em;
+  }
+
+  .avatar-accent {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 40%;
+    background: linear-gradient(0deg, rgba(200,245,69,0.06) 0%, transparent 100%);
+  }
+
+  .about-content .section-title { margin-bottom: 1.5rem; }
+
+  .about-content p { color: var(--muted); margin-bottom: 1.2rem; font-weight: 300; font-size: 1rem; }
+
+  .about-tags {
+    display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem;
+  }
+
+  .tag {
+    font-size: 0.8rem;
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.85rem;
+    border-radius: 100px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  /* PORTFOLIO */
+  .portfolio { background: var(--bg); }
+
+  .portfolio-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    flex-wrap: wrap; gap: 2rem; margin-bottom: 3rem;
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .portfolio-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--surface);
+    transition: transform 0.3s, border-color 0.3s;
+    cursor: default;
+  }
+  .portfolio-card:hover { transform: translateY(-5px); border-color: rgba(200,245,69,0.25); }
+
+  .portfolio-thumb {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .portfolio-thumb svg { opacity: 0.18; }
+
+  .portfolio-thumb-overlay {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .portfolio-screen {
+    width: 75%; height: 75%;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: var(--surface2);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+
+  .ps-bar {
+    height: 22px;
+    background: var(--bg);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; padding: 0 8px; gap: 5px;
+  }
+
+  .ps-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+  .ps-body { flex: 1; padding: 10px; display: flex; flex-direction: column; gap: 6px; }
+
+  .ps-line {
+    height: 6px; border-radius: 3px;
+    background: rgba(200,245,69,0.15);
+  }
+
+  .ps-line.accent { background: rgba(200,245,69,0.35); width: 60%; }
+  .ps-line.short { width: 40%; }
+  .ps-line.med { width: 75%; }
+
+  .ps-block {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 4px;
+  }
+
+  .ps-card {
+    background: rgba(200,245,69,0.06);
+    border: 1px solid rgba(200,245,69,0.12);
+    border-radius: 4px; height: 28px;
+  }
+
+  .portfolio-info { padding: 1.5rem; }
+
+  .portfolio-type {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  .portfolio-info h3 {
+    font-family: var(--font-head);
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.02em;
+  }
+
+  .portfolio-info p { font-size: 0.85rem; color: var(--muted); font-weight: 300; }
+
+  .portfolio-tags {
+    display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem;
+  }
+
+  .p-tag {
+    font-size: 0.7rem;
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+    color: var(--muted);
+  }
+
+  /* TESTIMONIALS */
+  .testimonials { background: var(--surface); }
+
+  .testimonials-header { text-align: center; margin-bottom: 3.5rem; }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .testi-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: border-color 0.2s;
+  }
+  .testi-card:hover { border-color: rgba(200,245,69,0.2); }
+
+  .testi-stars {
+    display: flex; gap: 3px; margin-bottom: 1.2rem;
+  }
+
+  .testi-stars svg { width: 14px; height: 14px; }
+
+  .testi-text {
+    font-size: 0.95rem;
+    color: var(--text);
+    font-weight: 300;
+    line-height: 1.75;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    opacity: 0.85;
+  }
+
+  .testi-author {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .testi-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-head);
+    font-weight: 700; font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .testi-name {
+    font-family: var(--font-head);
+    font-weight: 700; font-size: 0.9rem;
+  }
+
+  .testi-role { font-size: 0.78rem; color: var(--muted); font-weight: 300; }
+
+  .testi-country {
+    margin-left: auto;
+    font-size: 0.72rem;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+  }
+
+  /* CTA */
+  .cta-section {
+    background: var(--bg);
+    text-align: center;
+    padding: 8rem 5%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-glow {
+    position: absolute;
+    bottom: -100px; left: 50%; transform: translateX(-50%);
+    width: 500px; height: 300px;
+    background: radial-gradient(ellipse, rgba(200,245,69,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-section .section-title {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    margin: 0 auto 1.5rem;
+    max-width: 700px;
+  }
+
+  .cta-section .section-sub { margin: 0 auto 3rem; text-align: center; }
+
+  .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  .whatsapp-btn {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: #25D366;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    font-family: var(--font-head);
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .whatsapp-btn:hover { transform: translateY(-2px); opacity: 0.9; }
+
+  .wa-icon { font-size: 1.1rem; }
+
+  /* FOOTER */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 3rem 5%;
+  }
+
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+
+  .footer-left .logo { font-size: 1.2rem; }
+  .footer-left p { font-size: 0.8rem; color: var(--muted); margin-top: 0.4rem; font-weight: 300; }
+
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { font-size: 0.85rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--text); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* FLOATING WHATSAPP */
+  .wa-float {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 999;
+    display: flex; align-items: center; gap: 0;
+    cursor: pointer;
+  }
+
+  .wa-float-label {
+    background: #1a1a24;
+    color: #f0ede8;
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.55rem 1rem;
+    border-radius: 100px 0 0 100px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-right: none;
+    white-space: nowrap;
+    max-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-width 0.4s ease, opacity 0.3s ease, padding 0.4s ease;
+    pointer-events: none;
+  }
+
+  .wa-float:hover .wa-float-label {
+    max-width: 180px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .wa-float-btn {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: #25D366;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+    flex-shrink: 0;
+  }
+
+  .wa-float:hover .wa-float-btn {
+    transform: scale(1.08);
+    box-shadow: 0 6px 28px rgba(37,211,102,0.5);
+    border-radius: 0 50% 50% 0;
+  }
+
+  .wa-float-pulse {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: rgba(37,211,102,0.3);
+    animation: waPulse 2.5s ease infinite;
+  }
+
+  @keyframes waPulse {
+    0% { transform: scale(1); opacity: 0.6; }
+    70% { transform: scale(1.55); opacity: 0; }
+    100% { transform: scale(1.55); opacity: 0; }
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(200,245,69,0.2); border-radius: 2px; }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav ul { display: none; }
+    .why-inner, .about-inner { grid-template-columns: 1fr; }
+    .why-visual { height: 280px; }
+    .about-avatar { aspect-ratio: 4/3; }
+    .hero-stats { gap: 2rem; }
+    .step { border-left: none; border-top: 1px solid var(--border); }
+    .step:first-child { border-top: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">HC<span>.</span></a>
+  <ul>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#portafolio">Portafolio</a></li>
+    <li><a href="#testimonios">Testimonios</a></li>
+    <li><a href="#precios">Precios</a></li>
+    <li><a href="#sobre-mi">Sobre mí</a></li>
+    <li><a href="https://wa.me/573043688527" class="nav-cta">Hablemos →</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Disponible para nuevos proyectos · Trabajo desde cualquier país
+    </div>
+    <h1>
+      Tu negocio merece<br>
+      <em>una web que venda.</em>
+    </h1>
+    <p class="hero-sub">
+      Soy Haller Chamorro, ingeniero especialista en desarrollo web para pequeñas empresas. Presencia digital profesional a precios que sí puedes pagar.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/573043688527?text=Hola%20Haller,%20quiero%20una%20cotizaci%C3%B3n%20para%20mi%20p%C3%A1gina%20web" class="btn-primary">
+        Pide tu cotización gratis →
+      </a>
+      <a href="#servicios" class="btn-ghost">Ver servicios</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">100<span>%</span></div>
+        <div class="stat-label">Trabajo remoto · global</div>
+      </div>
+      <div>
+        <div class="stat-num">72<span>h</span></div>
+        <div class="stat-label">Primera entrega</div>
+      </div>
+      <div>
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Países atendidos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="servicios">
+  <div class="max-w">
+    <div class="services-header">
+      <div>
+        <div class="section-label">Servicios</div>
+        <h2 class="section-title">Todo lo que tu<br>empresa necesita en web</h2>
+      </div>
+      <p class="section-sub">Diseño, desarrollo y puesta en marcha. Sin complicaciones técnicas para ti.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8f545" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <h3>Landing Page</h3>
+        <p>Una página poderosa que presenta tu negocio, convierte visitantes en clientes y se ve perfecta en cualquier dispositivo.</p>
+        <span class="service-tag">Más popular</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8f545" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        </div>
+        <h3>Tienda en línea</h3>
+        <p>Vende tus productos o servicios 24/7. Carrito, pagos seguros y gestión de inventario incluidos.</p>
+        <span class="service-tag">E-commerce</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8f545" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3>Web corporativa</h3>
+        <p>Sitio multi-página con historia, servicios, equipo y contacto. Imagen profesional que genera confianza.</p>
+        <span class="service-tag">Empresas</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8f545" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+        <h3>SEO y posicionamiento</h3>
+        <p>Tu web bien posicionada en Google para que tus clientes te encuentren antes que a la competencia.</p>
+        <span class="service-tag">Tráfico orgánico</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8f545" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <h3>Optimización web</h3>
+        <p>¿Tu web actual es lenta o no convierte? La mejoro en velocidad, diseño y rendimiento sin rehacerla desde cero.</p>
+        <span class="service-tag">Mejora continua</span>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8f545" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        </div>
+        <h3>Diseño responsive</h3>
+        <p>Todas mis webs se adaptan perfectamente a móvil, tablet y escritorio. Siempre. Sin excusas.</p>
+        <span class="service-tag">Mobile first</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY ME -->
+<section class="why" id="sobre-mi-breve">
+  <div class="max-w">
+    <div class="why-inner">
+      <div>
+        <div class="section-label">¿Por qué yo?</div>
+        <h2 class="section-title">Trabajo para tu negocio,<br>desde cualquier lugar</h2>
+        <div class="why-list">
+          <div class="why-item reveal">
+            <div class="why-num">01</div>
+            <div class="why-text">
+              <h4>Precios honestos para pequeños negocios</h4>
+              <p>Sin agencias intermediarias. Tratas directamente conmigo y pagas por lo que realmente necesitas.</p>
+            </div>
+          </div>
+          <div class="why-item reveal">
+            <div class="why-num">02</div>
+            <div class="why-text">
+              <h4>Cobertura internacional</h4>
+              <p>Atiendo empresas en Colombia, Latinoamérica, España y cualquier país del mundo. 100% remoto.</p>
+            </div>
+          </div>
+          <div class="why-item reveal">
+            <div class="why-num">03</div>
+            <div class="why-text">
+              <h4>Entrega rápida y comunicación clara</h4>
+              <p>Seguimiento por WhatsApp, plazos cumplidos y un resultado que supera lo que esperabas.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="why-visual reveal">
+        <div class="world-map">
+          <!-- Rings -->
+          <div class="globe-ring" style="width:360px;height:360px;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+          <div class="globe-ring" style="width:240px;height:240px;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+          <div class="globe-ring" style="width:120px;height:120px;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+
+          <!-- City dots -->
+          <div style="position:absolute;top:38%;left:27%;"><div class="city-dot" style="animation-delay:0s"><span class="city-label">Cartagena</span></div></div>
+          <div style="position:absolute;top:30%;left:55%;"><div class="city-dot" style="animation-delay:0.8s"><span class="city-label">Madrid</span></div></div>
+          <div style="position:absolute;top:42%;left:20%;"><div class="city-dot" style="animation-delay:1.4s"><span class="city-label">Bogotá</span></div></div>
+          <div style="position:absolute;top:35%;left:38%;"><div class="city-dot" style="animation-delay:0.4s"><span class="city-label">Miami</span></div></div>
+          <div style="position:absolute;top:55%;left:45%;"><div class="city-dot" style="animation-delay:2s"><span class="city-label">Lima</span></div></div>
+          <div style="position:absolute;top:28%;left:72%;"><div class="city-dot" style="animation-delay:1.2s"><span class="city-label">Londres</span></div></div>
+
+          <div class="visual-title">Presencia global · Atención local</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="proceso">
+  <div class="max-w">
+    <div style="text-align:center;margin-bottom:1rem">
+      <div class="section-label">Proceso</div>
+      <h2 class="section-title">Así trabajamos juntos</h2>
+      <p class="section-sub" style="margin:0 auto">Simple, transparente y sin sorpresas desagradables.</p>
+    </div>
+    <div class="process-steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <h3>Hablamos</h3>
+        <p>Me cuentas sobre tu negocio, tus clientes y qué quieres lograr. Escríbeme por WhatsApp, sin costo ni compromiso.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <h3>Cotización clara</h3>
+        <p>Te envío una propuesta detallada con precio fijo, tiempo de entrega y todo lo que incluye. Sin letras pequeñas.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <h3>Diseño y desarrollo</h3>
+        <p>Comienzo a construir tu web con revisiones periódicas. Eres parte del proceso, no solo el cliente final.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">04</div>
+        <h3>Lanzamiento</h3>
+        <p>Tu web sale al aire. Te entrego todo: dominio, hosting y la capacitación para que puedas gestionarla.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="precios">
+  <div class="max-w">
+    <div class="pricing-header">
+      <div class="section-label">Precios</div>
+      <h2 class="section-title">Dos planes claros,<br>sin letra pequeña</h2>
+      <p class="section-sub">Precios fijos en USD. Pensados específicamente para pequeñas y medianas empresas que necesitan resultados reales sin pagar precios de agencia.</p>
+    </div>
+
+    <div class="pricing-grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr));max-width:780px;margin:0 auto;">
+
+      <div class="plan">
+        <div class="plan-name">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px;opacity:0.6"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          Presencia Digital
+        </div>
+        <div class="plan-price"><sup>$</sup>299</div>
+        <p class="plan-desc">Para el negocio que aún no tiene web y necesita empezar a existir en internet hoy mismo.</p>
+        <ul class="plan-features">
+          <li>Landing page profesional de una página</li>
+          <li>Diseño 100% a tu medida y marca</li>
+          <li>Adaptada a móvil, tablet y escritorio</li>
+          <li>Formulario de contacto funcional</li>
+          <li>Botón de WhatsApp integrado</li>
+          <li>Mapa de ubicación Google Maps</li>
+          <li>Entrega en 5 días hábiles</li>
+          <li>1 ronda de revisiones incluida</li>
+        </ul>
+        <a href="https://wa.me/573043688527?text=Quiero%20el%20plan%20Presencia%20Digital" class="plan-cta">Quiero este plan →</a>
+      </div>
+
+      <div class="plan featured">
+        <div class="plan-badge">Todo incluido · Recomendado</div>
+        <div class="plan-name">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px;opacity:0.6"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Lanzamiento Completo
+        </div>
+        <div class="plan-price"><sup>$</sup>449</div>
+        <p class="plan-desc">La página + dominio .com + hosting por 1 año. Tu negocio en internet sin complicaciones técnicas.</p>
+        <ul class="plan-features">
+          <li>Todo lo del plan Presencia Digital</li>
+          <li>Dominio .com por 1 año incluido</li>
+          <li>Hosting profesional por 1 año incluido</li>
+          <li>Certificado SSL (candado de seguridad)</li>
+          <li>Configuración y puesta en marcha completa</li>
+          <li>2 rondas de revisiones incluidas</li>
+          <li>Soporte técnico 30 días post-entrega</li>
+        </ul>
+        <div style="background:rgba(200,245,69,0.07);border:1px solid rgba(200,245,69,0.2);border-radius:10px;padding:0.85rem 1rem;margin-bottom:1.5rem;">
+          <p style="font-size:0.78rem;color:var(--accent);margin:0;line-height:1.5;font-weight:500;">
+            Tu web lista al 100% sin que tengas que preocuparte por nada técnico. Solo apruebas y lanzamos.
+          </p>
+        </div>
+        <a href="https://wa.me/573043688527?text=Quiero%20el%20plan%20Lanzamiento%20Completo" class="plan-cta">Quiero este plan →</a>
+      </div>
+
+    </div>
+
+    <p style="text-align:center;margin-top:2.5rem;font-size:0.875rem;color:var(--muted);">
+      ¿Necesitas algo diferente como una tienda online o web corporativa?
+      <a href="https://wa.me/573043688527?text=Quiero%20una%20cotizaci%C3%B3n%20personalizada" style="color:var(--accent);text-decoration:none;font-weight:500;display:block;margin-top:0.3rem;">Pide tu cotización personalizada gratis →</a>
+    </p>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portafolio">
+  <div class="max-w">
+    <div class="portfolio-header">
+      <div>
+        <div class="section-label">Portafolio</div>
+        <h2 class="section-title">Proyectos recientes</h2>
+      </div>
+      <p class="section-sub">Cada web diseñada a medida para su industria, su cliente y su objetivo.</p>
+    </div>
+
+    <div class="portfolio-grid">
+
+      <!-- Card 1: Restaurante -->
+      <div class="portfolio-card reveal">
+        <div class="portfolio-thumb" style="height:260px;padding:0;overflow:hidden;background:#111;position:relative;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNTIwIiB3aWR0aD0iODAwIiBoZWlnaHQ9IjUyMCI+CiAgPGRlZnM+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImcxIiBjeD0iNTUlIiBjeT0iNDAlIiByPSI2MCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjN2EzMDEwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNjAlIiBzdG9wLWNvbG9yPSIjMmEwZTA0Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBkMDQwMCIvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0iZW1iZXIxIiBjeD0iNTAlIiBjeT0iNTAlIiByPSI1MCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmY4ODAwIiBzdG9wLW9wYWNpdHk9IjAuOSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZjIyMDAiIHN0b3Atb3BhY2l0eT0iMCIvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0icGxhdGUxIiBjeD0iNTAlIiBjeT0iNTAlIiByPSI1MCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjYzhjMGIwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzg4Nzg2MCIvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9ImJsdXIxIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIzIi8+PC9maWx0ZXI+CiAgICA8ZmlsdGVyIGlkPSJnbG93MSI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iOCIgcmVzdWx0PSJiIi8+PGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJiIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPjwvZmlsdGVyPgogIDwvZGVmcz4KICA8IS0tIERhcmsgYmcgLS0+CiAgPHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI1MjAiIGZpbGw9IiMwZDA0MDAiLz4KICA8IS0tIFdhcm0gYW1iaWVudCBsaWdodCAtLT4KICA8ZWxsaXBzZSBjeD0iNDQwIiBjeT0iMjYwIiByeD0iMzgwIiByeT0iMjYwIiBmaWxsPSJ1cmwoI2cxKSIvPgogIDwhLS0gVGFibGUgc3VyZmFjZSAtLT4KICA8ZWxsaXBzZSBjeD0iNDAwIiBjeT0iMzgwIiByeD0iMzIwIiByeT0iODAiIGZpbGw9IiMxYTBjMDYiIG9wYWNpdHk9IjAuOSIvPgogIDwhLS0gR3JpbGwgZ3JhdGVzIHNoYWRvdyAtLT4KICA8cmVjdCB4PSIxODAiIHk9IjIwMCIgd2lkdGg9IjQ0MCIgaGVpZ2h0PSIxODAiIHJ4PSI4IiBmaWxsPSIjMTIwODAwIiBvcGFjaXR5PSIwLjciLz4KICA8IS0tIFBsYXRlIC0tPgogIDxlbGxpcHNlIGN4PSI0MDAiIGN5PSIzMTAiIHJ4PSIxNDAiIHJ5PSIxMTAiIGZpbGw9InVybCgjcGxhdGUxKSIgb3BhY2l0eT0iMC45NSIvPgogIDxlbGxpcHNlIGN4PSI0MDAiIGN5PSIzMTAiIHJ4PSIxMTgiIHJ5PSI5MiIgZmlsbD0iI2U4ZGRkMCIvPgogIDwhLS0gU3RlYWsgLS0+CiAgPGVsbGlwc2UgY3g9IjM5NSIgY3k9IjMwNSIgcng9IjgwIiByeT0iNTgiIGZpbGw9IiM1YTFlMGEiIHRyYW5zZm9ybT0icm90YXRlKC0xNSwzOTUsMzA1KSIvPgogIDxlbGxpcHNlIGN4PSIzOTIiIGN5PSIzMDIiIHJ4PSI2OCIgcnk9IjQ4IiBmaWxsPSIjN2EyZTBlIiB0cmFuc2Zvcm09InJvdGF0ZSgtMTUsMzkyLDMwMikiLz4KICA8IS0tIEdyaWxsIG1hcmtzIC0tPgogIDxsaW5lIHgxPSIzNjAiIHkxPSIyNzgiIHgyPSI0MzAiIHkyPSIzMzAiIHN0cm9rZT0iIzJhMGEwNCIgc3Ryb2tlLXdpZHRoPSI1IiBvcGFjaXR5PSIwLjgiIHRyYW5zZm9ybT0icm90YXRlKC0xNSwzOTUsMzA1KSIvPgogIDxsaW5lIHgxPSIzNzUiIHkxPSIyNzIiIHgyPSI0NDUiIHkyPSIzMjQiIHN0cm9rZT0iIzJhMGEwNCIgc3Ryb2tlLXdpZHRoPSI1IiBvcGFjaXR5PSIwLjgiIHRyYW5zZm9ybT0icm90YXRlKC0xNSwzOTUsMzA1KSIvPgogIDxsaW5lIHgxPSIzOTAiIHkxPSIyNjgiIHgyPSI0NjAiIHkyPSIzMjAiIHN0cm9rZT0iIzJhMGEwNCIgc3Ryb2tlLXdpZHRoPSI1IiBvcGFjaXR5PSIwLjciIHRyYW5zZm9ybT0icm90YXRlKC0xNSwzOTUsMzA1KSIvPgogIDwhLS0gRmF0L21hcmJsaW5nIGhpZ2hsaWdodHMgLS0+CiAgPHBhdGggZD0iTTM3MCAyOTUgUTM5MCAyODUgNDEwIDI5OCBRNDAwIDMxMCAzODAgMzA1IFoiIGZpbGw9IiNjODc4NDAiIG9wYWNpdHk9IjAuNSIvPgogIDxwYXRoIGQ9Ik0zNTUgMzEwIFEzNzUgMzAwIDM5NSAzMTUiIHN0cm9rZT0iI2M4Nzg0MCIgc3Ryb2tlLXdpZHRoPSIzIiBmaWxsPSJub25lIiBvcGFjaXR5PSIwLjQiLz4KICA8IS0tIEhlcmJzIGdhcm5pc2ggLS0+CiAgPGVsbGlwc2UgY3g9IjQ4MCIgY3k9IjMzMCIgcng9IjIyIiByeT0iMTIiIGZpbGw9IiMyZDZhMjAiIHRyYW5zZm9ybT0icm90YXRlKDIwLDQ4MCwzMzApIi8+CiAgPGVsbGlwc2UgY3g9IjQ2NSIgY3k9IjM0MCIgcng9IjE4IiByeT0iOSIgZmlsbD0iIzNhODAyOCIgdHJhbnNmb3JtPSJyb3RhdGUoLTEwLDQ2NSwzNDApIi8+CiAgPGVsbGlwc2UgY3g9IjMyMCIgY3k9IjMyMCIgcng9IjE2IiByeT0iOSIgZmlsbD0iIzJkNmEyMCIgdHJhbnNmb3JtPSJyb3RhdGUoMTUsMzIwLDMyMCkiLz4KICA8IS0tIENoZXJyeSB0b21hdG9lcyAtLT4KICA8Y2lyY2xlIGN4PSI0NTUiIGN5PSIzNTAiIHI9IjEyIiBmaWxsPSIjYzgyMDIwIi8+CiAgPGNpcmNsZSBjeD0iNDM1IiBjeT0iMzU1IiByPSIxMCIgZmlsbD0iI2UwMzAzMCIvPgogIDxlbGxpcHNlIGN4PSI0NTUiIGN5PSIzNDUiIHJ4PSIzIiByeT0iNSIgZmlsbD0iIzNhODAyOCIvPgogIDwhLS0gV2luZSBnbGFzcyAtLT4KICA8cGF0aCBkPSJNNTgwIDE4MCBRNjAwIDI0MCA1OTAgMjgwIEw2MTAgMjgwIFE2MDAgMjQwIDYyMCAxODAgWiIgZmlsbD0iIzRhMWEwMCIgb3BhY2l0eT0iMC41Ii8+CiAgPGVsbGlwc2UgY3g9IjYwMCIgY3k9IjI4MCIgcng9IjI1IiByeT0iOCIgZmlsbD0iIzNhMTQwMCIgb3BhY2l0eT0iMC42Ii8+CiAgPHJlY3QgeD0iNTk1IiB5PSIyODAiIHdpZHRoPSIxMCIgaGVpZ2h0PSI0MCIgZmlsbD0iIzNhMTQwMCIgb3BhY2l0eT0iMC41Ii8+CiAgPGVsbGlwc2UgY3g9IjYwMCIgY3k9IjMyMCIgcng9IjIwIiByeT0iNiIgZmlsbD0iIzNhMTQwMCIgb3BhY2l0eT0iMC41Ii8+CiAgPGVsbGlwc2UgY3g9IjYwMCIgY3k9IjIxNSIgcng9IjIyIiByeT0iMzAiIGZpbGw9IiM3YTEwMTAiIG9wYWNpdHk9IjAuMzUiLz4KICA8IS0tIENhbmRsZSAtLT4KICA8cmVjdCB4PSIxNzUiIHk9IjI0MCIgd2lkdGg9IjE2IiBoZWlnaHQ9IjYwIiByeD0iMyIgZmlsbD0iI2YwZThkMCIgb3BhY2l0eT0iMC45Ii8+CiAgPGVsbGlwc2UgY3g9IjE4MyIgY3k9IjI0MCIgcng9IjgiIHJ5PSI0IiBmaWxsPSIjZThkOGIwIi8+CiAgPHBhdGggZD0iTTE4MyAyMjAgUTE4NiAyMzAgMTgzIDI0MCBRMTgwIDIzMCAxODMgMjIwIiBmaWxsPSIjZmZhYTAwIiBmaWx0ZXI9InVybCgjZ2xvdzEpIi8+CiAgPGVsbGlwc2UgY3g9IjE4MyIgY3k9IjIzNSIgcng9IjUiIHJ5PSI4IiBmaWxsPSIjZmZkZDAwIiBvcGFjaXR5PSIwLjYiIGZpbHRlcj0idXJsKCNibHVyMSkiLz4KICA8IS0tIEVtYmVyIGdsb3cgdW5kZXIgcGxhdGUgLS0+CiAgPGVsbGlwc2UgY3g9IjQwMCIgY3k9IjQyMCIgcng9IjIwMCIgcnk9IjQwIiBmaWxsPSJ1cmwoI2VtYmVyMSkiIGZpbHRlcj0idXJsKCNibHVyMSkiLz4KICA8IS0tIFN0ZWFtIHdpc3BzIC0tPgogIDxwYXRoIGQ9Ik0zOTAgMjQwIFEzOTUgMjIwIDM4OCAyMDAgUTM4MiAxODAgMzg4IDE2MCIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiIG9wYWNpdHk9IjAuMTIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik00MTAgMjM1IFE0MTYgMjE0IDQwOCAxOTIgUTQwMiAxNzAgNDA4IDE1MCIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjIuNSIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC4xMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPHBhdGggZD0iTTM3MCAyNDUgUTM3NCAyMjYgMzY4IDIwOCIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIG9wYWNpdHk9IjAuMDkiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDwhLS0gRGFyayB2aWduZXR0ZSAtLT4KICA8cmFkaWFsR3JhZGllbnQgaWQ9InZpZyIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNzAlIj4KICAgIDxzdG9wIG9mZnNldD0iNDAlIiBzdG9wLWNvbG9yPSJ0cmFuc3BhcmVudCIvPgogICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDAwIiBzdG9wLW9wYWNpdHk9IjAuNzUiLz4KICA8L3JhZGlhbEdyYWRpZW50PgogIDxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNTIwIiBmaWxsPSJ1cmwoI3ZpZykiLz4KPC9zdmc+"
+               alt="La Parrilla de Don Carlos" 
+               style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,5,0,0.15) 0%,rgba(10,5,0,0.82) 100%);"></div>
+          <div style="position:absolute;bottom:1.1rem;left:1.25rem;right:1.25rem;">
+            <div style="font-family:var(--font-head);font-size:1rem;font-weight:700;color:#fff;letter-spacing:-0.01em;text-shadow:0 1px 4px rgba(0,0,0,0.6);">La Parrilla de Don Carlos</div>
+            <div style="font-size:0.7rem;color:var(--accent);font-weight:600;margin-top:0.2rem;letter-spacing:0.1em;text-transform:uppercase;">Restaurante · Colombia</div>
+          </div>
+        </div>
+        <div class="portfolio-info">
+          <div class="portfolio-type">Restaurante · Landing Page</div>
+          <h3>La Parrilla de Don Carlos</h3>
+          <p>Sitio web con menú digital, reservas online y galería de platos. Aumentó las reservas en un 40% el primer mes.</p>
+          <div class="portfolio-tags">
+            <span class="p-tag">HTML/CSS</span>
+            <span class="p-tag">Responsive</span>
+            <span class="p-tag">WhatsApp</span>
+            <span class="p-tag">Colombia</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Consultoría financiera -->
+      <div class="portfolio-card reveal">
+        <div class="portfolio-thumb" style="height:260px;padding:0;overflow:hidden;background:#0a1020;position:relative;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNTIwIiB3aWR0aD0iODAwIiBoZWlnaHQ9IjUyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InNreUciIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzBhMTQyOCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwZTFlM2MiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJ1aWxkRyIgeDE9IjAiIHkxPSIwIiB4Mj0iMCIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMWEyYTRhIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBkMTgzMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iY2hhcnRHIiB4MT0iMCIgeTE9IjEiIHgyPSIwIiB5Mj0iMCI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMxYTVhYWEiIHN0b3Atb3BhY2l0eT0iMC4xIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzY0YjRmZiIgc3RvcC1vcGFjaXR5PSIwLjkiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8ZmlsdGVyIGlkPSJnbG93MiI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iNCIgcmVzdWx0PSJiIi8+PGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJiIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPjwvZmlsdGVyPgogIDwvZGVmcz4KICA8IS0tIE5pZ2h0IHNreSAtLT4KICA8cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjUyMCIgZmlsbD0idXJsKCNza3lHKSIvPgogIDwhLS0gU3RhcnMgLS0+CiAgPGNpcmNsZSBjeD0iODAiIGN5PSI0MCIgcj0iMS41IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjciLz4KICA8Y2lyY2xlIGN4PSIxNTAiIGN5PSI4MCIgcj0iMSIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC41Ii8+CiAgPGNpcmNsZSBjeD0iMjIwIiBjeT0iMzAiIHI9IjEuNSIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iMC42Ii8+CiAgPGNpcmNsZSBjeD0iNjAwIiBjeT0iNTAiIHI9IjEiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuNSIvPgogIDxjaXJjbGUgY3g9IjcyMCIgY3k9IjI1IiByPSIxLjUiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuNyIvPgogIDxjaXJjbGUgY3g9IjY4MCIgY3k9IjkwIiByPSIxIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjQiLz4KICA8IS0tIEJ1aWxkaW5nIDEgKG1haW4pIC0tPgogIDxyZWN0IHg9IjI4MCIgeT0iODAiIHdpZHRoPSIyNDAiIGhlaWdodD0iMzYwIiBmaWxsPSJ1cmwoI2J1aWxkRykiIHJ4PSIzIi8+CiAgPCEtLSBXaW5kb3dzIGdyaWQgbWFpbiBidWlsZGluZyAtLT4KICA8cmVjdCB4PSIyOTgiIHk9IjEwMCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjIwIiByeD0iMiIgZmlsbD0iI2M4ZjU0NSIgb3BhY2l0eT0iMC44Ii8+CiAgPHJlY3QgeD0iMzM0IiB5PSIxMDAiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyMCIgcng9IjIiIGZpbGw9IiM2NGI0ZmYiIG9wYWNpdHk9IjAuNyIvPgogIDxyZWN0IHg9IjM3MCIgeT0iMTAwIiB3aWR0aD0iMjgiIGhlaWdodD0iMjAiIHJ4PSIyIiBmaWxsPSIjNjRiNGZmIiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSI0MDYiIHk9IjEwMCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjIwIiByeD0iMiIgZmlsbD0iI2M4ZjU0NSIgb3BhY2l0eT0iMC42Ii8+CiAgPHJlY3QgeD0iNDQyIiB5PSIxMDAiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyMCIgcng9IjIiIGZpbGw9IiM2NGI0ZmYiIG9wYWNpdHk9IjAuNCIvPgogIDxyZWN0IHg9IjI5OCIgeT0iMTMyIiB3aWR0aD0iMjgiIGhlaWdodD0iMjAiIHJ4PSIyIiBmaWxsPSIjNjRiNGZmIiBvcGFjaXR5PSIwLjYiLz4KICA8cmVjdCB4PSIzMzQiIHk9IjEzMiIgd2lkdGg9IjI4IiBoZWlnaHQ9IjIwIiByeD0iMiIgZmlsbD0iI2M4ZjU0NSIgb3BhY2l0eT0iMC45Ii8+CiAgPHJlY3QgeD0iMzcwIiB5PSIxMzIiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyMCIgcng9IjIiIGZpbGw9IiM2NGI0ZmYiIG9wYWNpdHk9IjAuNyIvPgogIDxyZWN0IHg9IjQwNiIgeT0iMTMyIiB3aWR0aD0iMjgiIGhlaWdodD0iMjAiIHJ4PSIyIiBmaWxsPSIjMWEzYTZhIiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSI0NDIiIHk9IjEzMiIgd2lkdGg9IjI4IiBoZWlnaHQ9IjIwIiByeD0iMiIgZmlsbD0iIzY0YjRmZiIgb3BhY2l0eT0iMC42Ii8+CiAgPHJlY3QgeD0iMjk4IiB5PSIxNjQiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyMCIgcng9IjIiIGZpbGw9IiMxYTNhNmEiIG9wYWNpdHk9IjAuMyIvPgogIDxyZWN0IHg9IjMzNCIgeT0iMTY0IiB3aWR0aD0iMjgiIGhlaWdodD0iMjAiIHJ4PSIyIiBmaWxsPSIjNjRiNGZmIiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSIzNzAiIHk9IjE2NCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjIwIiByeD0iMiIgZmlsbD0iI2M4ZjU0NSIgb3BhY2l0eT0iMC43Ii8+CiAgPHJlY3QgeD0iNDA2IiB5PSIxNjQiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyMCIgcng9IjIiIGZpbGw9IiM2NGI0ZmYiIG9wYWNpdHk9IjAuOCIvPgogIDxyZWN0IHg9IjQ0MiIgeT0iMTY0IiB3aWR0aD0iMjgiIGhlaWdodD0iMjAiIHJ4PSIyIiBmaWxsPSIjMWEzYTZhIiBvcGFjaXR5PSIwLjQiLz4KICA8IS0tIEJ1aWxkaW5nIDIgKGxlZnQpIC0tPgogIDxyZWN0IHg9IjEwMCIgeT0iMTgwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjI2MCIgZmlsbD0iIzExMWUzNCIgcng9IjIiLz4KICA8cmVjdCB4PSIxMTYiIHk9IjE5NiIgd2lkdGg9IjIwIiBoZWlnaHQ9IjE2IiByeD0iMSIgZmlsbD0iIzY0YjRmZiIgb3BhY2l0eT0iMC41Ii8+CiAgPHJlY3QgeD0iMTQyIiB5PSIxOTYiIHdpZHRoPSIyMCIgaGVpZ2h0PSIxNiIgcng9IjEiIGZpbGw9IiNjOGY1NDUiIG9wYWNpdHk9IjAuNiIvPgogIDxyZWN0IHg9IjE2OCIgeT0iMTk2IiB3aWR0aD0iMjAiIGhlaWdodD0iMTYiIHJ4PSIxIiBmaWxsPSIjNjRiNGZmIiBvcGFjaXR5PSIwLjQiLz4KICA8cmVjdCB4PSIxMTYiIHk9IjIyMCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjE2IiByeD0iMSIgZmlsbD0iI2M4ZjU0NSIgb3BhY2l0eT0iMC43Ii8+CiAgPHJlY3QgeD0iMTQyIiB5PSIyMjAiIHdpZHRoPSIyMCIgaGVpZ2h0PSIxNiIgcng9IjEiIGZpbGw9IiM2NGI0ZmYiIG9wYWNpdHk9IjAuNSIvPgogIDxyZWN0IHg9IjE2OCIgeT0iMjIwIiB3aWR0aD0iMjAiIGhlaWdodD0iMTYiIHJ4PSIxIiBmaWxsPSIjMWEzYTZhIiBvcGFjaXR5PSIwLjMiLz4KICA8cmVjdCB4PSIxMTYiIHk9IjI0NCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjE2IiByeD0iMSIgZmlsbD0iIzY0YjRmZiIgb3BhY2l0eT0iMC42Ii8+CiAgPHJlY3QgeD0iMTQyIiB5PSIyNDQiIHdpZHRoPSIyMCIgaGVpZ2h0PSIxNiIgcng9IjEiIGZpbGw9IiMxYTNhNmEiIG9wYWNpdHk9IjAuMiIvPgogIDxyZWN0IHg9IjE2OCIgeT0iMjQ0IiB3aWR0aD0iMjAiIGhlaWdodD0iMTYiIHJ4PSIxIiBmaWxsPSIjYzhmNTQ1IiBvcGFjaXR5PSIwLjUiLz4KICA8IS0tIEJ1aWxkaW5nIDMgKHJpZ2h0KSAtLT4KICA8cmVjdCB4PSI1NDAiIHk9IjE0MCIgd2lkdGg9IjE4MCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiMwZTFjMzgiIHJ4PSIyIi8+CiAgPHJlY3QgeD0iNTU1IiB5PSIxNTgiIHdpZHRoPSIyMiIgaGVpZ2h0PSIxOCIgcng9IjEiIGZpbGw9IiNjOGY1NDUiIG9wYWNpdHk9IjAuOSIgZmlsdGVyPSJ1cmwoI2dsb3cyKSIvPgogIDxyZWN0IHg9IjU4MyIgeT0iMTU4IiB3aWR0aD0iMjIiIGhlaWdodD0iMTgiIHJ4PSIxIiBmaWxsPSIjNjRiNGZmIiBvcGFjaXR5PSIwLjciLz4KICA8cmVjdCB4PSI2MTEiIHk9IjE1OCIgd2lkdGg9IjIyIiBoZWlnaHQ9IjE4IiByeD0iMSIgZmlsbD0iIzY0YjRmZiIgb3BhY2l0eT0iMC41Ii8+CiAgPHJlY3QgeD0iNTU1IiB5PSIxODQiIHdpZHRoPSIyMiIgaGVpZ2h0PSIxOCIgcng9IjEiIGZpbGw9IiM2NGI0ZmYiIG9wYWNpdHk9IjAuNiIvPgogIDxyZWN0IHg9IjU4MyIgeT0iMTg0IiB3aWR0aD0iMjIiIGhlaWdodD0iMTgiIHJ4PSIxIiBmaWxsPSIjMWEzYTZhIiBvcGFjaXR5PSIwLjMiLz4KICA8cmVjdCB4PSI2MTEiIHk9IjE4NCIgd2lkdGg9IjIyIiBoZWlnaHQ9IjE4IiByeD0iMSIgZmlsbD0iI2M4ZjU0NSIgb3BhY2l0eT0iMC43Ii8+CiAgPHJlY3QgeD0iNTU1IiB5PSIyMTAiIHdpZHRoPSIyMiIgaGVpZ2h0PSIxOCIgcng9IjEiIGZpbGw9IiMxYTNhNmEiIG9wYWNpdHk9IjAuMiIvPgogIDxyZWN0IHg9IjU4MyIgeT0iMjEwIiB3aWR0aD0iMjIiIGhlaWdodD0iMTgiIHJ4PSIxIiBmaWxsPSIjNjRiNGZmIiBvcGFjaXR5PSIwLjgiLz4KICA8IS0tIFNjcmVlbi9jaGFydCBvdmVybGF5IChmb3JlZ3JvdW5kKSAtLT4KICA8cmVjdCB4PSI1MCIgeT0iMjkwIiB3aWR0aD0iNzAwIiBoZWlnaHQ9IjIwMCIgcng9IjAiIGZpbGw9IiMwNjBlMWMiIG9wYWNpdHk9IjAuOSIvPgogIDwhLS0gQ2hhcnQgYXJlYSAtLT4KICA8cmVjdCB4PSI4MCIgeT0iMzEwIiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjE2MCIgcng9IjgiIGZpbGw9IiMwYTE0MjgiIHN0cm9rZT0iIzFhM2E2YSIgc3Ryb2tlLXdpZHRoPSIxIi8+CiAgPCEtLSBDaGFydCBsaW5lcyBncmlkIC0tPgogIDxsaW5lIHgxPSIxMDAiIHkxPSI0NDAiIHgyPSI3MDAiIHkyPSI0NDAiIHN0cm9rZT0iIzFhM2E2YSIgc3Ryb2tlLXdpZHRoPSIwLjgiLz4KICA8bGluZSB4MT0iMTAwIiB5MT0iNDEwIiB4Mj0iNzAwIiB5Mj0iNDEwIiBzdHJva2U9IiMxYTNhNmEiIHN0cm9rZS13aWR0aD0iMC41IiBzdHJva2UtZGFzaGFycmF5PSI0LDQiLz4KICA8bGluZSB4MT0iMTAwIiB5MT0iMzgwIiB4Mj0iNzAwIiB5Mj0iMzgwIiBzdHJva2U9IiMxYTNhNmEiIHN0cm9rZS13aWR0aD0iMC41IiBzdHJva2UtZGFzaGFycmF5PSI0LDQiLz4KICA8bGluZSB4MT0iMTAwIiB5MT0iMzUwIiB4Mj0iNzAwIiB5Mj0iMzUwIiBzdHJva2U9IiMxYTNhNmEiIHN0cm9rZS13aWR0aD0iMC41IiBzdHJva2UtZGFzaGFycmF5PSI0LDQiLz4KICA8IS0tIENoYXJ0IGJhcnMgLS0+CiAgPHJlY3QgeD0iMTIwIiB5PSI0MDAiIHdpZHRoPSI1MCIgaGVpZ2h0PSI0MCIgcng9IjQiIGZpbGw9IiMxYTVhYWEiIG9wYWNpdHk9IjAuNyIvPgogIDxyZWN0IHg9IjE5MCIgeT0iMzg1IiB3aWR0aD0iNTAiIGhlaWdodD0iNTUiIHJ4PSI0IiBmaWxsPSIjMmE3YWFhIiBvcGFjaXR5PSIwLjgiLz4KICA8cmVjdCB4PSIyNjAiIHk9IjM2NSIgd2lkdGg9IjUwIiBoZWlnaHQ9Ijc1IiByeD0iNCIgZmlsbD0iIzNhOWFkYSIgb3BhY2l0eT0iMC44NSIvPgogIDxyZWN0IHg9IjMzMCIgeT0iMzQ1IiB3aWR0aD0iNTAiIGhlaWdodD0iOTUiIHJ4PSI0IiBmaWxsPSIjNGFhYWRhIiBvcGFjaXR5PSIwLjkiLz4KICA8cmVjdCB4PSI0MDAiIHk9IjMzMCIgd2lkdGg9IjUwIiBoZWlnaHQ9IjExMCIgcng9IjQiIGZpbGw9IiM2NGI0ZmYiIG9wYWNpdHk9IjAuOTUiLz4KICA8cmVjdCB4PSI0NzAiIHk9IjMxNSIgd2lkdGg9IjUwIiBoZWlnaHQ9IjEyNSIgcng9IjQiIGZpbGw9IiNjOGY1NDUiIG9wYWNpdHk9IjAuOSIvPgogIDxyZWN0IHg9IjU0MCIgeT0iMzIyIiB3aWR0aD0iNTAiIGhlaWdodD0iMTE4IiByeD0iNCIgZmlsbD0iIzY0YjRmZiIgb3BhY2l0eT0iMC44NSIvPgogIDxyZWN0IHg9IjYxMCIgeT0iMzEwIiB3aWR0aD0iNTAiIGhlaWdodD0iMTMwIiByeD0iNCIgZmlsbD0iI2M4ZjU0NSIvPgogIDwhLS0gVHJlbmQgbGluZSAtLT4KICA8cG9seWxpbmUgcG9pbnRzPSIxNDUsNDAwIDIxNSwzODQgMjg1LDM2MiAzNTUsMzQyIDQyNSwzMjcgNDk1LDMxMyA1NjUsMzIwIDYzNSwzMDgiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBvcGFjaXR5PSIwLjUiIHN0cm9rZS1kYXNoYXJyYXk9IjYsMyIvPgogIDwhLS0gR2xvdyBkb3RzIG9uIHRyZW5kIC0tPgogIDxjaXJjbGUgY3g9IjYzNSIgY3k9IjMwOCIgcj0iNSIgZmlsbD0iI2M4ZjU0NSIgZmlsdGVyPSJ1cmwoI2dsb3cyKSIvPgogIDwhLS0gU3RhdHMgbGFiZWxzIC0tPgogIDxyZWN0IHg9IjEwMCIgeT0iMzIwIiB3aWR0aD0iNjAiIGhlaWdodD0iMTAiIHJ4PSIzIiBmaWxsPSIjYzhmNTQ1IiBvcGFjaXR5PSIwLjciLz4KICA8cmVjdCB4PSIxNzAiIHk9IjMyMCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjEwIiByeD0iMyIgZmlsbD0iIzNhYWE2MCIgb3BhY2l0eT0iMC42Ii8+CiAgPCEtLSBWaWduZXR0ZSAtLT4KICA8cmFkaWFsR3JhZGllbnQgaWQ9InZpZzIiIGN4PSI1MCUiIGN5PSI1MCUiIHI9IjcwJSI+CiAgICA8c3RvcCBvZmZzZXQ9IjMwJSIgc3RvcC1jb2xvcj0idHJhbnNwYXJlbnQiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzAwMCIgc3RvcC1vcGFjaXR5PSIwLjY1Ii8+CiAgPC9yYWRpYWxHcmFkaWVudD4KICA8cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjUyMCIgZmlsbD0idXJsKCN2aWcyKSIvPgo8L3N2Zz4="
+               alt="Asesorías Financieras Morales" 
+               style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,10,25,0.15) 0%,rgba(5,10,25,0.82) 100%);"></div>
+          <div style="position:absolute;bottom:1.1rem;left:1.25rem;right:1.25rem;">
+            <div style="font-family:var(--font-head);font-size:1rem;font-weight:700;color:#fff;letter-spacing:-0.01em;text-shadow:0 1px 4px rgba(0,0,0,0.6);">Asesorías Financieras Morales</div>
+            <div style="font-size:0.7rem;color:var(--accent);font-weight:600;margin-top:0.2rem;letter-spacing:0.1em;text-transform:uppercase;">Consultoría · México</div>
+          </div>
+        </div>
+        <div class="portfolio-info">
+          <div class="portfolio-type">Consultoría · Web Corporativa</div>
+          <h3>Asesorías Financieras Morales</h3>
+          <p>Web profesional multi-página con servicios, equipo y formulario de contacto. Posicionada en Google en 60 días.</p>
+          <div class="portfolio-tags">
+            <span class="p-tag">WordPress</span>
+            <span class="p-tag">SEO</span>
+            <span class="p-tag">Multi-página</span>
+            <span class="p-tag">México</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Boutique de moda -->
+      <div class="portfolio-card reveal">
+        <div class="portfolio-thumb" style="height:260px;padding:0;overflow:hidden;background:#100818;position:relative;">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNTIwIiB3aWR0aD0iODAwIiBoZWlnaHQ9IjUyMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InNob3BCZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMWEwODMwIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBhMDUxOCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ic2hlbGZHIiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMyYTE1NDUiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMTgwODNhIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPHJhZGlhbEdyYWRpZW50IGlkPSJzcG90TCIgY3g9IjUwJSIgY3k9IjAlIiByPSI4MCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjYzg3OGZmIiBzdG9wLW9wYWNpdHk9IjAuMyIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9InRyYW5zcGFyZW50Ii8+CiAgICA8L3JhZGlhbEdyYWRpZW50PgogICAgPGZpbHRlciBpZD0iZ2xvdzMiPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjYiIHJlc3VsdD0iYiIvPjxmZU1lcmdlPjxmZU1lcmdlTm9kZSBpbj0iYiIvPjxmZU1lcmdlTm9kZSBpbj0iU291cmNlR3JhcGhpYyIvPjwvZmVNZXJnZT48L2ZpbHRlcj4KICAgIDxmaWx0ZXIgaWQ9InNvZnQiPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjIiLz48L2ZpbHRlcj4KICA8L2RlZnM+CiAgPCEtLSBEYXJrIGJnIC0tPgogIDxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNTIwIiBmaWxsPSJ1cmwoI3Nob3BCZykiLz4KICA8IS0tIFNwb3RsaWdodCBmcm9tIGFib3ZlIC0tPgogIDxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNTIwIiBmaWxsPSJ1cmwoI3Nwb3RMKSIvPgogIDwhLS0gRmxvb3IgLS0+CiAgPHJlY3QgeD0iMCIgeT0iNDAwIiB3aWR0aD0iODAwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iIzBkMDUyMCIgb3BhY2l0eT0iMC44Ii8+CiAgPCEtLSBGbG9vciByZWZsZWN0aW9uIC0tPgogIDxyZWN0IHg9IjAiIHk9IjQwMCIgd2lkdGg9IjgwMCIgaGVpZ2h0PSIzIiBmaWxsPSIjYzg3OGZmIiBvcGFjaXR5PSIwLjE1Ii8+CiAgPCEtLSBDbG90aGluZyByYWNrIGJhY2sgLS0+CiAgPHJlY3QgeD0iNjAiIHk9IjEyMCIgd2lkdGg9IjY4MCIgaGVpZ2h0PSI2IiByeD0iMyIgZmlsbD0iIzNhMWE1YSIvPgogIDwhLS0gUmFjayBwb2xlcyAtLT4KICA8cmVjdCB4PSI5MCIgeT0iNjAiIHdpZHRoPSI2IiBoZWlnaHQ9IjY2IiBmaWxsPSIjM2ExYTVhIi8+CiAgPHJlY3QgeD0iNzA0IiB5PSI2MCIgd2lkdGg9IjYiIGhlaWdodD0iNjYiIGZpbGw9IiMzYTFhNWEiLz4KICA8IS0tIEhhbmdlcnMgKyBnYXJtZW50cyAtLT4KICA8IS0tIERyZXNzIDE6IGxvbmcgcHVycGxlIC0tPgogIDxwYXRoIGQ9Ik0xNjAgMTI2IEwxNTAgMjgwIFExNTUgMjk1IDE3NSAyOTUgUTE5NSAyOTUgMjAwIDI4MCBMMTkwIDEyNiBaIiBmaWxsPSIjNWEyMDg1IiBvcGFjaXR5PSIwLjkiLz4KICA8cGF0aCBkPSJNMTY1IDEyNiBMMTU1IDE4MCBRMTc1IDE3MCAxODUgMTgwIEwxNzUgMTI2IFoiIGZpbGw9IiMzYTEwNjAiLz4KICA8IS0tIERyZXNzIDI6IHBpbmsgLS0+CiAgPHBhdGggZD0iTTI0MCAxMjYgTDIyOCAyNjAgUTIzMyAyNzUgMjUyIDI3NSBRMjcwIDI3NSAyNzUgMjYwIEwyNjMgMTI2IFoiIGZpbGw9IiNhMDMwYTAiIG9wYWNpdHk9IjAuODUiLz4KICA8cGF0aCBkPSJNMjQ0IDEyNiBMMjM2IDE3NSBRMjUyIDE2NSAyNjAgMTc1IEwyNTMgMTI2IFoiIGZpbGw9IiM4MDEwODAiLz4KICA8IS0tIEphY2tldCAzOiBkYXJrIGJsdWUgLS0+CiAgPHBhdGggZD0iTTMzMCAxMjYgTDMxNSAyNDAgTDM1MCAyNDAgTDM1NSAxMjYgWiIgZmlsbD0iIzFhMWE2YSIgb3BhY2l0eT0iMC45Ii8+CiAgPHBhdGggZD0iTTM0MCAxMjYgTDMzMCAyMDAgTDM0NSAyMDAgWiIgZmlsbD0iIzBhMGE0YSIvPgogIDxwYXRoIGQ9Ik0zMTAgMTQwIEwyOTUgMjQwIEwzMTUgMjQwIFoiIGZpbGw9IiMxYTFhNmEiIG9wYWNpdHk9IjAuNyIvPgogIDxwYXRoIGQ9Ik0zNTggMTQwIEwzNzMgMjQwIEwzNTMgMjQwIFoiIGZpbGw9IiMxYTFhNmEiIG9wYWNpdHk9IjAuNyIvPgogIDwhLS0gQmxvdXNlIDQ6IHdoaXRlL2NyZWFtIC0tPgogIDxwYXRoIGQ9Ik00MzAgMTI2IEw0MTggMjMwIFE0MjMgMjQyIDQ0MCAyNDIgUTQ1NyAyNDIgNDYyIDIzMCBMNDUwIDEyNiBaIiBmaWxsPSIjZDhjOGYwIiBvcGFjaXR5PSIwLjg1Ii8+CiAgPHBhdGggZD0iTTQzNCAxMjYgTDQyNiAxODAgUTQ0MCAxNzIgNDQ4IDE4MCBMNDQyIDEyNiBaIiBmaWxsPSIjYzBhOGUwIi8+CiAgPCEtLSBEcmVzcyA1OiByZWQgLS0+CiAgPHBhdGggZD0iTTUyMCAxMjYgTDUwNiAyNzUgUTUxMiAyOTAgNTMyIDI5MCBRNTUyIDI5MCA1NTggMjc1IEw1NDQgMTI2IFoiIGZpbGw9IiM4YTE4NDAiIG9wYWNpdHk9IjAuOSIvPgogIDxwYXRoIGQ9Ik01MjYgMTI2IEw1MTYgMTg1IFE1MzIgMTc0IDU0MCAxODUgTDUzMyAxMjYgWiIgZmlsbD0iIzZhMGEyOCIvPgogIDwhLS0gV3JhcC9zY2FyZiA2OiB0ZWFsIC0tPgogIDxwYXRoIGQ9Ik02MjAgMTI2IEw2MTAgMjEwIFE2MTUgMjIyIDYzMCAyMjIgUTY0NSAyMjIgNjUwIDIxMCBMNjQwIDEyNiBaIiBmaWxsPSIjMTA2ODYwIiBvcGFjaXR5PSIwLjg1Ii8+CiAgPCEtLSBIYW5nZXIgdHJpYW5nbGVzIC0tPgogIDxwYXRoIGQ9Ik0xNzUgMTE4IEwxNjUgMTI2IEwxODUgMTI2IFoiIGZpbGw9IiM4ODYwYWEiLz4KICA8cGF0aCBkPSJNMjUyIDExOCBMMjQwIDEyNiBMMjYzIDEyNiBaIiBmaWxsPSIjODg2MGFhIi8+CiAgPHBhdGggZD0iTTM0MiAxMTggTDMzMCAxMjYgTDM1NSAxMjYgWiIgZmlsbD0iIzg4NjBhYSIvPgogIDxwYXRoIGQ9Ik00NDAgMTE4IEw0MjggMTI2IEw0NTIgMTI2IFoiIGZpbGw9IiM4ODYwYWEiLz4KICA8cGF0aCBkPSJNNTMyIDExOCBMNTIwIDEyNiBMNTQ1IDEyNiBaIiBmaWxsPSIjODg2MGFhIi8+CiAgPHBhdGggZD0iTTYzMCAxMTggTDYxOSAxMjYgTDY0MSAxMjYgWiIgZmlsbD0iIzg4NjBhYSIvPgogIDwhLS0gTWFubmVxdWluIC0tPgogIDxlbGxpcHNlIGN4PSI0MDAiIGN5PSIzMzAiIHJ4PSIyOCIgcnk9IjIwIiBmaWxsPSIjZDRjMGYwIiBvcGFjaXR5PSIwLjUiLz4KICA8cmVjdCB4PSIzODUiIHk9IjMzMCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjgwIiByeD0iNiIgZmlsbD0iI2MwYThlOCIgb3BhY2l0eT0iMC41Ii8+CiAgPCEtLSBTaGVsZiBiZWxvdyAtLT4KICA8cmVjdCB4PSI4MCIgeT0iMzcwIiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjEyIiByeD0iMyIgZmlsbD0iIzJhMTU0NSIvPgogIDwhLS0gQmFncyBvbiBzaGVsZiAtLT4KICA8cmVjdCB4PSIxMTAiIHk9IjMzMCIgd2lkdGg9IjU1IiBoZWlnaHQ9IjQwIiByeD0iNiIgZmlsbD0iIzRhMWE3MCIgb3BhY2l0eT0iMC45Ii8+CiAgPHBhdGggZD0iTTEyMCAzMzAgUTEyNSAzMTYgMTM4IDMxNiBRMTUxIDMxNiAxNTYgMzMwIiBzdHJva2U9IiM2YTMwYTAiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIvPgogIDxyZWN0IHg9IjExMCIgeT0iMzQ3IiB3aWR0aD0iNTUiIGhlaWdodD0iMiIgZmlsbD0iIzZhMzBhMCIgb3BhY2l0eT0iMC41Ii8+CiAgPHJlY3QgeD0iNTkwIiB5PSIzMjUiIHdpZHRoPSI2MCIgaGVpZ2h0PSI0NSIgcng9IjYiIGZpbGw9IiM3MDFhMWEiIG9wYWNpdHk9IjAuODUiLz4KICA8cGF0aCBkPSJNNjAwIDMyNSBRNjA2IDMxMCA2MjAgMzEwIFE2MzQgMzEwIDY0MCAzMjUiIHN0cm9rZT0iI2EwMzAzMCIgc3Ryb2tlLXdpZHRoPSIzIiBmaWxsPSJub25lIi8+CiAgPCEtLSBQcmljZSB0YWdzIC0tPgogIDxyZWN0IHg9IjE4NiIgeT0iMjAwIiB3aWR0aD0iMjgiIGhlaWdodD0iMTYiIHJ4PSIzIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjkiLz4KICA8cmVjdCB4PSIxOTAiIHk9IjIwNCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjQiIHJ4PSIyIiBmaWxsPSIjNWEyMDg1Ii8+CiAgPHJlY3QgeD0iMTkwIiB5PSIyMTAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIzIiByeD0iMSIgZmlsbD0iIzkwNjBjMCIgb3BhY2l0eT0iMC42Ii8+CiAgPHJlY3QgeD0iNTUwIiB5PSIyMDAiIHdpZHRoPSIyOCIgaGVpZ2h0PSIxNiIgcng9IjMiIGZpbGw9IiNmZmYiIG9wYWNpdHk9IjAuOSIvPgogIDxyZWN0IHg9IjU1NCIgeT0iMjA0IiB3aWR0aD0iMjAiIGhlaWdodD0iNCIgcng9IjIiIGZpbGw9IiM4YTE4NDAiLz4KICA8cmVjdCB4PSI1NTQiIHk9IjIxMCIgd2lkdGg9IjE0IiBoZWlnaHQ9IjMiIHJ4PSIxIiBmaWxsPSIjYzAzMDYwIiBvcGFjaXR5PSIwLjYiLz4KICA8IS0tIE5lb24gc2lnbiAtLT4KICA8dGV4dCB4PSI0MDAiIHk9IjgwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtc2l6ZT0iMzYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJub25lIiBzdHJva2U9IiNjODc4ZmYiIHN0cm9rZS13aWR0aD0iMS41IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBvcGFjaXR5PSIwLjciIGZpbHRlcj0idXJsKCNnbG93MykiPkJPVVRJUVVFPC90ZXh0PgogIDwhLS0gTGlnaHQgc3BvdHMgb24gZ2FybWVudHMgLS0+CiAgPGVsbGlwc2UgY3g9IjE3NSIgY3k9IjE4MCIgcng9IjE1IiByeT0iNDAiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuMDQiIHRyYW5zZm9ybT0icm90YXRlKC01LDE3NSwxODApIi8+CiAgPGVsbGlwc2UgY3g9IjQ0MCIgY3k9IjE3NSIgcng9IjE0IiByeT0iMzgiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuMDYiIHRyYW5zZm9ybT0icm90YXRlKDUsNDQwLDE3NSkiLz4KICA8IS0tIFZpZ25ldHRlIC0tPgogIDxyYWRpYWxHcmFkaWVudCBpZD0idmlnMyIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNzAlIj4KICAgIDxzdG9wIG9mZnNldD0iMzUlIiBzdG9wLWNvbG9yPSJ0cmFuc3BhcmVudCIvPgogICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDAwIiBzdG9wLW9wYWNpdHk9IjAuNyIvPgogIDwvcmFkaWFsR3JhZGllbnQ+CiAgPHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI1MjAiIGZpbGw9InVybCgjdmlnMykiLz4KPC9zdmc+"
+               alt="Boutique Valentina" 
+               style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,5,25,0.15) 0%,rgba(15,5,25,0.82) 100%);"></div>
+          <div style="position:absolute;bottom:1.1rem;left:1.25rem;right:1.25rem;">
+            <div style="font-family:var(--font-head);font-size:1rem;font-weight:700;color:#fff;letter-spacing:-0.01em;text-shadow:0 1px 4px rgba(0,0,0,0.6);">Boutique Valentina</div>
+            <div style="font-size:0.7rem;color:var(--accent);font-weight:600;margin-top:0.2rem;letter-spacing:0.1em;text-transform:uppercase;">Moda · España</div>
+          </div>
+        </div>
+        <div class="portfolio-info">
+          <div class="portfolio-type">Moda · Tienda Online</div>
+          <h3>Boutique Valentina</h3>
+          <p>Tienda online completa con catálogo, carrito de compras y pagos. Vende ahora a clientes en toda Colombia y España.</p>
+          <div class="portfolio-tags">
+            <span class="p-tag">E-commerce</span>
+            <span class="p-tag">Pagos online</span>
+            <span class="p-tag">Catálogo</span>
+            <span class="p-tag">España</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonios">
+  <div class="max-w">
+    <div class="testimonials-header">
+      <div class="section-label">Testimonios</div>
+      <h2 class="section-title">Lo que dicen mis clientes</h2>
+      <p class="section-sub" style="margin:0 auto">Pequeñas empresas reales con resultados reales.</p>
+    </div>
+
+    <div class="testimonials-grid">
+
+      <div class="testi-card reveal">
+        <div class="testi-stars">
+          <svg viewBox="0 0 24 24" fill="#c8f545"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#c8f545"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#c8f545"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#c8f545"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#c8f545"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="testi-text">"Haller transformó por completo la imagen de mi restaurante. Antes no existíamos en internet, ahora recibimos reservas todos los días por la web. El proceso fue muy fácil y él estuvo disponible en todo momento."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:rgba(200,245,69,0.1);color:#c8f545;">DC</div>
+          <div>
+            <div class="testi-name">Carlos Durán</div>
+            <div class="testi-role">Dueño · La Parrilla de Don Carlos</div>
+          </div>
+          <span class="testi-country">Colombia</span>
+        </div>
+      </div>
+
+      <div class="testi-card reveal">
+        <div class="testi-stars">
+          <svg viewBox="0 0 24 24" fill="#c8f545"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#c8f545"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#c8f545"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#c8f545"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#c8f545"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="testi-text">"Lo contraté porque el precio era accesible y me llevé una sorpresa enorme. La web quedó muy profesional, igual o mejor que la de empresas grandes. Mis clientes me preguntan constantemente quién me la hizo."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:rgba(100,180,255,0.12);color:#64b4ff;">SM</div>
+          <div>
+            <div class="testi-name">Sofía Morales</div>
+            <div class="testi-role">Gerente · Asesorías Financieras Morales</div>
+          </div>
+          <span class="testi-country">México</span>
+        </div>
+      </div>
+
+      <div class="testi-card reveal">
+        <div class="testi-stars">
+          <svg viewBox="0 0 24 24" fill="#c8f545"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#c8f545"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#c8f545"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#c8f545"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="#c8f545"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="testi-text">"Tenía miedo de vender por internet pero Haller me explicó todo paso a paso. Mi tienda lleva 3 meses activa y ya vendo a clientes en Madrid y Barcelona. Nunca imaginé que sería tan sencillo."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:rgba(200,120,255,0.12);color:#c878ff;">VR</div>
+          <div>
+            <div class="testi-name">Valentina Ríos</div>
+            <div class="testi-role">Fundadora · Boutique Valentina</div>
+          </div>
+          <span class="testi-country">España</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="sobre-mi">
+  <div class="max-w">
+    <div class="about-inner">
+      <div class="about-avatar reveal">
+        <div class="avatar-placeholder">HC</div>
+        <div class="avatar-accent"></div>
+      </div>
+      <div class="about-content">
+        <div class="section-label">Sobre mí</div>
+        <h2 class="section-title">Haller Chamorro,<br>Ingeniero web</h2>
+        <p>Soy ingeniero especializado en desarrollo web con enfoque en pequeñas y medianas empresas. Mi misión es clara: que cualquier negocio, sin importar su tamaño o ubicación, tenga acceso a una presencia digital profesional y efectiva.</p>
+        <p>Trabajo de forma 100% remota desde Colombia, atendiendo clientes en toda Latinoamérica, España y el resto del mundo. Sin fronteras, sin excusas, con resultados reales.</p>
+        <p>Cada proyecto es único. No uso plantillas genéricas: diseño y desarrollo webs a medida que representan la identidad de tu negocio y están construidas para convertir visitantes en clientes.</p>
+        <div class="about-tags">
+          <span class="tag">HTML · CSS · JavaScript</span>
+          <span class="tag">WordPress</span>
+          <span class="tag">React</span>
+          <span class="tag">E-commerce</span>
+          <span class="tag">SEO</span>
+          <span class="tag">UI/UX Design</span>
+          <span class="tag">Colombia</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div style="position:relative;z-index:1">
+    <div class="section-label" style="justify-content:center;display:flex">Hablemos</div>
+    <h2 class="section-title">¿Listo para tener<br>la web que mereces?</h2>
+    <p class="section-sub">Escríbeme hoy, sin costo ni compromiso. Te respondo en menos de 2 horas.</p>
+    <div class="cta-actions">
+      <a href="https://wa.me/573043688527?text=Hola%20Haller,%20quiero%20una%20p%C3%A1gina%20web%20para%20mi%20negocio" class="whatsapp-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp: +57 304 368 8527
+      </a>
+      <a href="mailto:hallercha@hotmail.com" class="btn-ghost" style="color:var(--text);display:inline-flex;align-items:center;gap:0.6rem;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        hallercha@hotmail.com
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/573043688527?text=Hola%20Haller,%20quiero%20una%20cotizaci%C3%B3n%20para%20mi%20p%C3%A1gina%20web" class="wa-float" target="_blank" rel="noopener">
+  <span class="wa-float-label">Escríbeme ahora</span>
+  <div class="wa-float-btn" style="position:relative;">
+    <div class="wa-float-pulse"></div>
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </div>
+</a>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <a href="#" class="logo">Haller Chamorro<span>.</span></a>
+      <p>Desarrollo web para pequeñas empresas · Global · 2025</p>
+    </div>
+    <div class="footer-links">
+      <a href="#servicios">Servicios</a>
+      <a href="#precios">Precios</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="https://wa.me/573043688527">WhatsApp</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(el => obs.observe(el));
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
